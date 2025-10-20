@@ -24,3 +24,37 @@ taskList.appendChild(li);
 taskInput.value = '';
 taskInput.focus();
 });
+
+taskList.addEventListener('click', function(e){
+    const li = e.target.closest('li');
+    if (!li) return;
+    
+    if (e.target.classList.contains('delete-btn')) {
+        li.remove();
+        return;
+    }
+
+    if (e.target.tagName === 'SPAN') {
+        li.classList.toggle('completed');
+    }
+});
+
+let currentFilter = 'all';
+
+taskList.addEventListener('dblclick', function(e) {
+    if (e.target.tagName === 'SPAN') {
+        const span = e.target;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = span.textContent;
+
+        span.replaceWith(input);
+        input.focus();
+
+        input.addEventListener('blur', function(){
+          const newSpan = document.createElement('span');
+          newSpan.textContent = input.value.trim() || 'Sem título';
+          input.replaceWith(newSpan);
+        });
+    }
+});
