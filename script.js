@@ -58,3 +58,23 @@ taskList.addEventListener('dblclick', function(e) {
         });
     }
 });
+
+document.querySelectorAll('.filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+     currentFilter = btn.dataset.filter;
+     applyFilter();
+    });
+});
+
+
+function applyFilter() {
+    taskList.querySelectorAll('li').forEach(li => {
+         if (currentFilter === 'all') {
+           li.style.display = '';
+        } else if (currentFilter === 'active') {
+           li.style.display = li.classList.contains('completed') ? 'none' : ' ';
+        } else {
+           li.style.display = li.classList.contains('completed') ? ' ': 'none';
+        }
+   });
+}
